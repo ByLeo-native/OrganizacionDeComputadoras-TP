@@ -1,0 +1,27 @@
+.metadata
+# Archivos ejecutables
+*.exe
+*.out
+
+# Archivos temporales
+*.o
+*.d
+*.obj
+
+# Archivos de respaldo
+*~
+*.bak
+
+# Archivos de configuración personal de CodeBlocks
+*.cbp
+*.layout
+*.depend
+*.suo
+
+# Archivos de dependencias externas (depende de la estructura del proyecto)
+/dependencias/
+/vendor/
+/libs/
+
+# Otros archivos específicos que no deben incluirse
+archivo-no-deseado.txt

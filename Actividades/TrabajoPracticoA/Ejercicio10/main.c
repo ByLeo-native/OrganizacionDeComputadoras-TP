@@ -42,6 +42,5 @@ int main()
     } else {
         printf("El numero no es palindromo.");
     }
-
     return 0;
 }

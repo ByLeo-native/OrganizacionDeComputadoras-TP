@@ -11,14 +11,20 @@
 //Esta operación deberá ser IMPLEMENTADA
 void crearListaVacia(tLista *L)
 {
+    #ifdef ALTERNATIVE
     *L = (tLista) malloc(sizeof(struct tCelda));
     (*L) -> elemento = ELE_NULO;
     (*L) -> siguiente = POS_NULA;
+    #endif // ALTERATIVE
+    #ifndef ALTERNATIVE
+    *L = POS_NULA;
+    #endif // ALTERATIVE
 }
 
 //Esta operación deberá ser IMPLEMENTADA
 void insertarElemento(tElem *E, tPosicion P, tLista *L)
 {
+    #ifdef ALTERNATIVE
     if (*L==POS_NULA) exit(LST_NO_INI);
     tPosicion nuevo = (tPosicion) malloc (sizeof(struct tCelda));
     nuevo->elemento = E;
@@ -29,6 +35,24 @@ void insertarElemento(tElem *E, tPosicion P, tLista *L)
         tPosicion anteriorP = anterior(P, *L);
         anteriorP -> siguiente = nuevo;
     }
+    #endif // ALTERATIVE
+    #ifndef ALTERNATIVE
+    tPosicion nuevo = (tPosicion) malloc (sizeof(struct tCelda));
+    nuevo->elemento = E;
+    nuevo->siguiente = P;
+
+    if (*L==POS_NULA) {
+        *L = nuevo;
+        nuevo->siguiente = POS_NULA;
+    } else {
+        if( P == *L) { //Creo que sirve tambien para cuando la lista esta vacia
+            (*L) = nuevo;
+        } else {
+            tPosicion anteriorP = anterior(P, *L);
+            anteriorP -> siguiente = nuevo;
+        }
+    }
+    #endif // ALTERATIVE
 }
 
 void eliminarElemento(tPosicion P, tLista *L)
@@ -48,8 +72,14 @@ void eliminarElemento(tPosicion P, tLista *L)
 //Esta operación deberá ser IMPLEMENTADA
 int esListaVacia(tLista L)
 {
+    #ifdef ALTERNATIVE
     int estaVacia = ((L->elemento == ELE_NULO) && L->siguiente == POS_NULA ) ? TRUE : FALSE;
     return estaVacia;
+    #endif // ALTERNATIVE
+    #ifndef ALTERNATIVE
+    int estaVacia = (L == POS_NULA) ? TRUE : FALSE;
+    return estaVacia;
+    #endif // ALTERNATIVE
 }
 tPosicion primera(tLista L){
         return L;

@@ -13,17 +13,22 @@ void mostrarElementos(tLista L)
 
         aux = L;
 
-        printf("[ ");
         if (esListaVacia(L))
                 printf("La lista L no posee elementos.\n");
-        else
-          while (aux != POS_NULA)
-          {
+        else{
+            printf("[ ");
+            #ifndef ALTERNATIVE
+                while (aux != POS_NULA)
+            #endif // ALTERNARTIVE
+            #ifdef ALTERNATIVE
+            while(aux ->siguiente != POS_NULA)
+            #endif // ALTERNATIVE
+            {
                 e =  recuperar(aux,L);
                 printf("%i ", *e);
                 aux = siguiente(aux,L);
-
-          }
+            }
+        }
         printf("]");
 }
 

@@ -13,4 +13,7 @@
 #define ELE_NULO NULL
 
 #define SIZE 10
+
+
+//#define ALTERNATIVE
 //#endif  //DEFINE_H_INCLUDED

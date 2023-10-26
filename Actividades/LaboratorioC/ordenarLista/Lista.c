@@ -11,35 +11,48 @@
 //Esta operación deberá ser IMPLEMENTADA
 void crearListaVacia(tLista *L)
 {
-    *L = (tLista)malloc(sizeof(struct tCelda));
-    if (L == POS_NULA) {
-        fprintf(stderr, "Error: No se pudo asignar memoria en el montículo.\n");
-        exit(LST_NO_INI);
-    }
-
-    (*L)->elemento = ELE_NULO;
-    (*L)->siguiente = POS_NULA;
+    #ifdef ALTERNATIVE
+    *L = (tLista) malloc(sizeof(struct tCelda));
+    (*L) -> elemento = ELE_NULO;
+    (*L) -> siguiente = POS_NULA;
+    #endif // ALTERATIVE
+    #ifndef ALTERNATIVE
+    *L = POS_NULA;
+    #endif // ALTERATIVE
 }
 
 //Esta operación deberá ser IMPLEMENTADA
 void insertarElemento(tElem *E, tPosicion P, tLista *L)
 {
-     if (*L == POS_NULA) {
-        fprintf(stderr, "Error: La lista no está inicializada.\n");
-        exit(LST_NO_INI);
-    }
-
-    tPosicion nuevo = (tPosicion)malloc(sizeof(struct tCelda));
-
+    #ifdef ALTERNATIVE
+    if (*L==POS_NULA) exit(LST_NO_INI);
+    tPosicion nuevo = (tPosicion) malloc (sizeof(struct tCelda));
     nuevo->elemento = E;
-
-    if (P == NULL) {
-        nuevo->siguiente = (*L)->siguiente;
-        (*L)->siguiente = nuevo;
+    nuevo->siguiente = P;
+    if( P == *L) {
+        (*L) = nuevo;
     } else {
-        nuevo->siguiente = P->siguiente;
-        P->siguiente = nuevo;
+        tPosicion anteriorP = anterior(P, *L);
+        anteriorP -> siguiente = nuevo;
     }
+    #endif // ALTERATIVE
+    #ifndef ALTERNATIVE
+    tPosicion nuevo = (tPosicion) malloc (sizeof(struct tCelda));
+    nuevo->elemento = E;
+    nuevo->siguiente = P;
+
+    if (*L==POS_NULA) {
+        *L = nuevo;
+        nuevo->siguiente = POS_NULA;
+    } else {
+        if( P == *L) { //Creo que sirve tambien para cuando la lista esta vacia
+            (*L) = nuevo;
+        } else {
+            tPosicion anteriorP = anterior(P, *L);
+            anteriorP -> siguiente = nuevo;
+        }
+    }
+    #endif // ALTERATIVE
 }
 
 void eliminarElemento(tPosicion P, tLista *L)
@@ -59,12 +72,14 @@ void eliminarElemento(tPosicion P, tLista *L)
 //Esta operación deberá ser IMPLEMENTADA
 int esListaVacia(tLista L)
 {
-    if (L == POS_NULA) {
-        fprintf(stderr, "Error: La lista no está inicializada.\n");
-        exit(LST_NO_INI);
-    }
-    int estaVacia = (L->siguiente == POS_NULA) ? TRUE : FALSE;
+    #ifdef ALTERNATIVE
+    int estaVacia = ((L->elemento == ELE_NULO) && L->siguiente == POS_NULA ) ? TRUE : FALSE;
     return estaVacia;
+    #endif // ALTERNATIVE
+    #ifndef ALTERNATIVE
+    int estaVacia = (L == POS_NULA) ? TRUE : FALSE;
+    return estaVacia;
+    #endif // ALTERNATIVE
 }
 tPosicion primera(tLista L){
         return L;
@@ -81,7 +96,6 @@ tPosicion ultima(tLista L){
 
     }else exit(LST_NO_INI);
     return aux;
-
 }
 tPosicion anterior(tPosicion P, tLista L){
    tPosicion aux;
